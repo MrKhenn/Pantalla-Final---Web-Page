@@ -7,25 +7,91 @@
     <link rel="icon" href="Icon.png" target="_blank">
     <link rel="stylesheet" href="Noticias.css">
     <script src="https://kit.fontawesome.com/5acbd8e506.js" crossorigin="anonymous"></script>
-</head>
+    </head>
 <body>
-    <!--encabezado-->
     <div>
+        <!-- Encabezado modificado -->
         <header>
             <div class="logo">
                 <img src="Icon.png" alt="logo">
                 <h2 class="nombre-empresa">Tienda Gamer</h2>
             </div>
-            <div>
-                <nav>
-                    <a href="/index.html" class="Inicio">Inicio</a>
-                    <a href="/paginas/Nosotros/Nosotros.html" class="Nosotros">Nosotros</a>
-                    <a href="/paginas/Productos/Productos.html" class="Productos"> Productos</a>
-                    <a href="/paginas/Noticias.html" class="Noticias">Noticias</a>
-                </nav>
-            </div>
+            <nav>
+                <a href="/index.html" class="Inicio">Inicio</a>
+                <a href="/paginas/Nosotros/Nosotros.html" class="Nosotros">Nosotros</a>
+                <a href="/paginas/Productos/Productos.html" class="Productos">Productos</a>
+                <a href="/paginas/Noticias.html" class="Noticias">Noticias</a>
+        
+                <div id="userContainer" style="display: none; align-items: center;">
+                    <img id="userPhoto" alt="User Photo" style="width: 50px; height: 50px; border-radius: 50%; cursor: pointer;" onclick="changeProfilePic()">
+                    <span id="userName"></span>
+                    <button id="logoutButton">Cerrar Sesión</button>
+                </div>
+            
+                <div id="loginContainer">
+                    <a href="/paginas/login/login.html">Iniciar Sesión</a>
+                </div>
+            
+                <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="previewImage(event)">
+            
+                <script>
+                    // Manejo del usuario
+                    window.onload = function() {
+                        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+                        const userContainer = document.getElementById("userContainer");
+                        const loginContainer = document.getElementById("loginContainer");
+                        const userName = document.getElementById("userName");
+                        const userPhoto = document.getElementById("userPhoto");
+                        const logoutButton = document.getElementById("logoutButton");
+        
+                        if (loggedInUser) {
+                            userContainer.style.display = "flex";  // Muestra el contenedor del usuario
+                            loginContainer.style.display = "none";  // Oculta el botón de inicio de sesión
+                            userName.textContent = loggedInUser.name; // Muestra el nombre del usuario
+                            userPhoto.src = loggedInUser.photo; // Muestra la foto del usuario
+                        } else {
+                            userContainer.style.display = "none";    // Oculta el contenedor del usuario
+                            loginContainer.style.display = "block";   // Muestra el botón de inicio de sesión
+                        }
+        
+                        // Manejo del cierre de sesión
+                        logoutButton.addEventListener("click", function() {
+                            localStorage.removeItem("loggedInUser");
+                            window.location.reload(); // Recargar la página
+                        });
+                    };
+        
+                    // Cambia la imagen de perfil al hacer clic en ella
+                    function changeProfilePic() {
+                        document.getElementById('file-input').click();
+                    }
+        
+                    // Muestra una vista previa de la imagen seleccionada
+                    function previewImage(event) {
+                        const file = event.target.files[0];
+                        const reader = new FileReader();
+        
+                        reader.onload = function (e) {
+                            const profilePic = document.getElementById('userPhoto');
+                            profilePic.src = e.target.result; // Cambia la imagen de perfil
+                            // Guarda la nueva imagen en el localStorage
+                            const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+                            if (loggedInUser) {  // Asegúrate de que el usuario esté registrado
+                                loggedInUser.photo = e.target.result; // Actualiza la foto del usuario
+                                localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser)); // Guarda de nuevo en localStorage
+                            }
+                        };
+        
+                        if (file) {
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                </script>
+            </nav>
         </header>
-    </div>
+        </div>
+        <!--fin encabezado-->
+        
     
     <div id="decoracion_contenedor"></div>
     <section class="vacio"></section>
@@ -210,5 +276,33 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        // Script para mostrar el usuario y manejar el cierre de sesión
+        window.onload = function() {
+            const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+            const userContainer = document.getElementById("userContainer");
+            const loginContainer = document.getElementById("loginContainer");
+            const userName = document.getElementById("userName");
+            const userPhoto = document.getElementById("userPhoto");
+            const logoutButton = document.getElementById("logoutButton");
+    
+            if (loggedInUser) {
+                userContainer.style.display = "flex";  // Muestra el contenedor del usuario
+                loginContainer.style.display = "none";  // Oculta el botón de inicio de sesión
+                userName.textContent = loggedInUser.name; // Muestra el nombre del usuario
+                userPhoto.src = loggedInUser.photo; // Muestra la foto del usuario
+            } else {
+                userContainer.style.display = "none";    // Oculta el contenedor del usuario
+                loginContainer.style.display = "block";   // Muestra el botón de inicio de sesión
+            }
+    
+            // Manejo del cierre de sesión
+            logoutButton.addEventListener("click", function() {
+                localStorage.removeItem("loggedInUser");
+                window.location.reload(); // Recargar la página
+            });
+        };
+    </script>
 </body>
 </html>

@@ -31,6 +31,14 @@ header{
     color: black;
 }
 
+nav {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+}
+
 nav a{
     font-weight: 600;
     padding-right: 10px;
@@ -47,6 +55,56 @@ a{
 
 nav .Inicio{
     color:#cc2f2f;
+}
+
+#userContainer{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#userPhoto{
+    margin: 8px;
+    border: 4px solid #ffffff;
+}
+
+#userName{
+    font-family: sans-serif;
+    color: #fff;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+#logoutButton{
+    padding: 2px;
+    background-color: #8f0a0a;
+    border: 2px solid #8f0a0a;
+    color:#fff;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+#logoutButton:hover{
+    background-color: #550505;
+    border: 2px solid #3b0404;
+    transform: translate(-3%);
+}
+
+#loginContainer{
+    padding: 10px;
+    margin-left: 60px;
+    background-color: #8f0a0a;
+    border-radius: 14px;
+}
+
+#loginContainer:hover{
+    background-color: #500606;
+}
+
+#loginContainer a:hover{
+    color: #ffffff;
 }
 
 /*todo codigo de carrousel*/
